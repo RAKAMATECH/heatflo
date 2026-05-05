@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: heatflo-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /api/catalog/products
+    envVars:
+      - key: APP_NAME
+        value: Heatflo
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: error
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: CACHE_DRIVER
+        value: file
+      - key: CACHE_STORE
+        value: file
+      - key: SESSION_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FILESYSTEM_DISK
+        value: public
+      - key: FRONTEND_URL
+        value: https://heatflo.co.zw
+      - key: SANCTUM_STATEFUL_DOMAINS
+        value: heatflo.co.zw,www.heatflo.co.zw
+      - key: LEAD_NOTIFY_TO
+        value: info@heatflo.co.zw
+      - key: DEMO_CATALOG_SEED
+        value: false
+      - key: RUN_MIGRATIONS
+        value: true
+      - key: RUN_SEEDERS
+        value: true
