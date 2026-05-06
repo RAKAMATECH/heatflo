@@ -28,14 +28,17 @@ class LeadController extends Controller
 
         $notifyTo = env('LEAD_NOTIFY_TO');
         if (is_string($notifyTo) && $notifyTo !== '') {
-            try {
-                Mail::to($notifyTo)->send(new LeadCreated($lead));
-            } catch (\Throwable $e) {
-                Log::warning('Lead notification email failed', [
-                    'lead_id' => $lead->id,
-                    'error' => $e->getMessage(),
-                ]);
-            }
+            $leadId = $lead->id;
+            dispatch(function () use ($notifyTo, $lead, $leadId) {
+                try {
+                    Mail::to($notifyTo)->send(new LeadCreated($lead));
+                } catch (\Throwable $e) {
+                    Log::warning('Lead notification email failed', [
+                        'lead_id' => $leadId,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            })->afterResponse();
         }
 
         return response()->json([
