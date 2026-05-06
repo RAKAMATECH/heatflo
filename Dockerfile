@@ -1,3 +1,14 @@
+FROM node:20-bookworm-slim AS assets
+
+WORKDIR /app
+
+COPY package.json ./
+RUN npm install
+
+COPY resources ./resources
+COPY vite.config.js ./
+RUN npm run build
+
 FROM php:8.2-apache
 
 WORKDIR /var/www/html
@@ -28,6 +39,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
 COPY . .
+COPY --from=assets /app/public/build ./public/build
 
 RUN composer dump-autoload --optimize \
     && mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views bootstrap/cache \

@@ -26,7 +26,7 @@ services:
       - key: DB_HOST
         sync: false
       - key: DB_PORT
-        value: 3306
+        value: 19283
       - key: DB_DATABASE
         sync: false
       - key: DB_USERNAME
@@ -39,6 +39,10 @@ services:
         value: file
       - key: SESSION_DRIVER
         value: file
+      - key: SESSION_SECURE_COOKIE
+        value: true
+      - key: SESSION_DOMAIN
+        value: ""
       - key: QUEUE_CONNECTION
         value: sync
       - key: FILESYSTEM_DISK
