@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'mail_relay' => [
+        'url' => env('MAIL_RELAY_URL'),
+        'secret' => env('MAIL_RELAY_SECRET'),
+        'timeout' => (int) env('MAIL_RELAY_TIMEOUT', 5),
+    ],
+
 ];
